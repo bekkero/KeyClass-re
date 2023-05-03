@@ -97,15 +97,15 @@ def load_mimic_data() :
 
     target_categories = [0, 1, 2, 3]
     result = result[result['ICD9_CODE'].isin(target_categories)]
-    sample_size = min(result['ICD9_CODE'].value_counts())
-    sample_size = 100
-    balanced_df = pd.DataFrame(columns=result.columns)
-    for cat in target_categories:
-        cat_df = result_df[result_df['ICD9_CODE'] == cat]
-        cat_sample = cat_df.sample(sample_size, random_state=42)
-        balanced_df = pd.concat([balanced_df, cat_sample])
-    result = balanced_df
-    #result = result.sample(80000)
+    #sample_size = min(result['ICD9_CODE'].value_counts())
+    #sample_size = 100
+    #balanced_df = pd.DataFrame(columns=result.columns)
+    #for cat in target_categories:
+    #    cat_df = result_df[result_df['ICD9_CODE'] == cat]
+    #    cat_sample = cat_df.sample(sample_size, random_state=42)
+    #    balanced_df = pd.concat([balanced_df, cat_sample])
+    #result = balanced_df
+    result = result.sample(80000)
     # Split the dataset into train and test sets (70/30 proportion)
     result.loc[:, 'TEXT'] = result['TEXT'].replace('\n', '', regex=True)
     train, test = train_test_split(result, test_size=0.3, random_state=42)
